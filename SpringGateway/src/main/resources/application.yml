@@ -1,0 +1,41 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: gateway-service
+  mvc:
+    cors:
+      mappings:
+        /users/**:
+          allowed-origins: "http://localhost:8081"
+          allowed-methods: GET,POST,PUT,DELETE
+          allowed-headers: "*"
+          allow-credentials: true
+        /ads/**:
+          allowed-origins: "http://localhost:8081"
+          allowed-methods: GET,POST,PUT,DELETE
+          allowed-headers: "*"
+          allow-credentials: true
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: http://localhost:8089
+          predicates:
+            - Path=/users/**
+        - id: ads-service
+          uri: http://localhost:8080
+          predicates:
+            - Path=/ads/**
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+  api-docs:
+    path: /v3/api-docs
+
+logging:
+  level:
+    org.springframework: DEBUG
+    org.springframework.cloud.gateway: DEBUG

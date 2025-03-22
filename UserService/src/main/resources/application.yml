@@ -1,0 +1,40 @@
+spring:
+  mvc:
+    cors:
+      mappings:
+        /users/**:
+          allowed-origins: "http://localhost:8081"
+          allowed-methods: GET,POST,PUT,DELETE
+          allowed-headers: "*"
+          allow-credentials: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/users_db_java
+    username: root
+    password: roottoor
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show-sql: true
+        format-sql: true
+  liquibase:
+    change-log: classpath:/db/changelog/changelog-master.xml
+    enabled: true
+    default-schema: public
+
+server:
+  port: 8089
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui
+
+logging:
+  level:
+    org.springframework: DEBUG
+    org.springdoc: DEBUG
